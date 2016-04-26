@@ -1,0 +1,31 @@
+@startuml
+title DUHTCSRA
+
+actor "Dr. Umphress" as User
+rectangle {
+
+    usecase (Record Gas Fillup) as RGF
+    usecase (Record Maintenance) as RM
+
+    usecase (View Service Record) as VSR
+    usecase (Filter Service Record) as FSR
+    usecase (View Usage Statistics) as VUS
+
+    usecase (Manage Vehicles) as MV
+    usecase (Switch Current Vehicle) as SV
+    usecase (Add New Vehicle) as ANV
+    usecase (Edit Vehicle Info) as EVI
+
+    User - VSR
+    VSR -- FSR: <<includes>>
+    VSR -- VUS: <<includes>>
+
+    User - RGF
+    User - RM
+
+    User - MV
+    MV -- SV: <<includes>>
+    MV -- ANV: <<includes>>
+    MV -- EVI: <<includes>>
+}
+@enduml
