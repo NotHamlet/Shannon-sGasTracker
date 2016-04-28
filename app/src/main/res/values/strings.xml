@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Shannon\'sGasTracker</string>
+    <string name="app_name">Shannon\'s Gas Tracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_new_gas_record">New Gas Record</string>
 </resources>
