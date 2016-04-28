@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
 
@@ -9,9 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
         android:src="@drawable/ic_local_gas_station_24dp"
-        android:textAppearance="?attr/textAppearanceListItem"/>
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -20,17 +21,26 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/odometer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem"/>
-
-        <TextView
             android:id="@+id/gallons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceListItem"/>
 
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceListItemSmall"/>
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/odometer"
+        android:layout_weight="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceListItem"
+        />
 </LinearLayout>

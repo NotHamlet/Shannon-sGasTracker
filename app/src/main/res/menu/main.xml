@@ -3,8 +3,8 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_new_gas_record"
-        android:icon="@drawable/ic_local_gas_station_24dp"
-        android:title="@string/action_new_gas_record"
+        android:icon="@drawable/ic_add_24dp"
+        android:title="@string/action_new_log_entry"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->

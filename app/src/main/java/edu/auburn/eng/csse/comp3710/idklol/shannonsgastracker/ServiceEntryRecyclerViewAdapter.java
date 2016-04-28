@@ -62,9 +62,16 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
         switch (viewType) {
             case GAS_ENTRY_VIEWTYPE:
                 GasEntry gasEntry = (GasEntry)(holder.mItem);
-                ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(gasEntry.getOdometer()));
+
+                String odometerText = String.format(res.getString(R.string.list_item_odometer_label), gasEntry.getOdometer());
+                ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(odometerText));
+
                 String gallonsText = String.format(res.getString(R.string.list_item_gallons_label), gasEntry.getGallons());
                 ((TextView)(holderView.findViewById(R.id.gallons))).setText(String.valueOf(gallonsText));
+
+                String priceText = String.format(res.getString(R.string.list_item_gas_price_label), gasEntry.getPrice());
+                ((TextView)(holderView.findViewById(R.id.price))).setText(String.valueOf(priceText));
+
                 break;
         }
 

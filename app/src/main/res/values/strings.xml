@@ -2,8 +2,10 @@
     <string name="app_name">Shannon\'s Gas Tracker</string>
 
     <string name="action_settings">Settings</string>
-    <string name="action_new_gas_record">New Gas Record</string>
+    <string name="action_new_log_entry">New Log Entry</string>
     <string name="list_item_gallons_label">Gallons: %1$.1f</string>
+    <string name="list_item_odometer_label">%1$.0f miles</string>
+    <string name="list_item_gas_price_label">$%1$.2f</string>
 
     <!--TODO: Figure out formatting for Odometer readings: ~Try TOTALMILES(DIFF) -->
 
