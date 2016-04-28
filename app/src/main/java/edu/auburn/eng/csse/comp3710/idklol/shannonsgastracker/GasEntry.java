@@ -7,13 +7,10 @@ import java.util.UUID;
 /**
  * Created by stephen on 4/27/16.
  */
-public class GasEntry implements LogEntry {
+public class GasEntry extends LogEntry {
 
-    private Date mDate = new Date();
     private double mGallons;
     private double mPrice;
-    private double mOdometer;
-    private String id = UUID.randomUUID().toString();
 
     public GasEntry() {
         mGallons = 0;
@@ -25,16 +22,8 @@ public class GasEntry implements LogEntry {
         Random rand = new Random();
         newEntry.mPrice = ((double)(50+rand.nextInt(200)))/100;
         newEntry.mGallons = (1+rand.nextInt(149))/10.0;
-        newEntry.mOdometer = 60000+rand.nextInt(940010)/10.0;
+        newEntry.setOdometer(60000+rand.nextInt(940010)/10.0);
         return newEntry;
-    }
-
-    public Date getDate() {
-        return mDate;
-    }
-
-    public void setDate(Date date) {
-        mDate = date;
     }
 
     public double getPrice() {
@@ -53,17 +42,4 @@ public class GasEntry implements LogEntry {
         mGallons = gallons;
     }
 
-    public double getOdometer() {
-        return mOdometer;
-    }
-
-    public void setOdometer(double odometer) {
-        mOdometer = odometer;
-    }
-
-
-    @Override
-    public String getID() {
-        return id;
-    }
 }
