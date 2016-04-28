@@ -12,9 +12,10 @@ public class GasEntry implements LogEntry {
     private Date mDate = new Date();
     private double mGallons;
     private double mPrice;
-    String id = UUID.randomUUID().toString();
+    private double mOdometer;
+    private String id = UUID.randomUUID().toString();
 
-        public GasEntry() {
+    public GasEntry() {
         mGallons = 0;
         mPrice = 0;
     }
@@ -23,7 +24,8 @@ public class GasEntry implements LogEntry {
         GasEntry newEntry = new GasEntry();
         Random rand = new Random();
         newEntry.mPrice = ((double)(50+rand.nextInt(200)))/100;
-        newEntry.mGallons = (1+rand.nextInt(149))/10;
+        newEntry.mGallons = (1+rand.nextInt(149))/10.0;
+        newEntry.mOdometer = 60000+rand.nextInt(940010)/10.0;
         return newEntry;
     }
 
@@ -50,6 +52,15 @@ public class GasEntry implements LogEntry {
     public void setGallons(double gallons) {
         mGallons = gallons;
     }
+
+    public double getOdometer() {
+        return mOdometer;
+    }
+
+    public void setOdometer(double odometer) {
+        mOdometer = odometer;
+    }
+
 
     @Override
     public String getID() {

@@ -1,5 +1,6 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,10 +58,13 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
         holder.mItem = mValues.get(position);
         View holderView = holder.mView;
         int viewType = getItemViewType(position);
+        Resources res = holder.mView.getContext().getResources();
         switch (viewType) {
             case GAS_ENTRY_VIEWTYPE:
                 GasEntry gasEntry = (GasEntry)(holder.mItem);
-                ((TextView)(holderView.findViewById(R.id.content))).setText(String.valueOf(gasEntry.getGallons()));
+                ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(gasEntry.getOdometer()));
+                String gallonsText = String.format(res.getString(R.string.list_item_gallons_label), gasEntry.getGallons());
+                ((TextView)(holderView.findViewById(R.id.gallons))).setText(String.valueOf(gallonsText));
                 break;
         }
 
