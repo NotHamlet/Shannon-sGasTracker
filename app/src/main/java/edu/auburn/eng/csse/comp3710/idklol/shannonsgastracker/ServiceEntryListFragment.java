@@ -41,6 +41,7 @@ public class ServiceEntryListFragment extends Fragment {
     public static ServiceEntryListFragment newInstance() {
         ServiceEntryListFragment fragment = new ServiceEntryListFragment();
         Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT,1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -103,6 +104,6 @@ public class ServiceEntryListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(LogEntry item);
     }
 }

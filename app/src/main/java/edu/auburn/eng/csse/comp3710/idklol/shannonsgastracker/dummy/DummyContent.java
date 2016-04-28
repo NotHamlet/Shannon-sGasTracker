@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.GasEntry;
+import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.LogEntry;
+
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
@@ -16,25 +19,25 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static final List<LogEntry> ITEMS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static final Map<String, LogEntry> ITEM_MAP = new HashMap<String, LogEntry>();
 
     private static final int COUNT = 25;
 
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
+            addItem(GasEntry.randomEntry());
         }
     }
 
-    private static void addItem(DummyItem item) {
+    private static void addItem(LogEntry item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.getID(), item);
     }
 
     private static DummyItem createDummyItem(int position) {

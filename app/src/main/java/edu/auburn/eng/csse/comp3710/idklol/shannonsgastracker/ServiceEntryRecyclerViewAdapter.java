@@ -18,26 +18,51 @@ import java.util.List;
  */
 public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<ServiceEntryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private static final int GAS_ENTRY_VIEWTYPE = 1;
+    private final List<LogEntry> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ServiceEntryRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public ServiceEntryRecyclerViewAdapter(List<LogEntry> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (mValues.get(position) instanceof  GasEntry) {
+            return GAS_ENTRY_VIEWTYPE;
+        }
+
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_serviceentry, parent, false);
-        return new ViewHolder(view);
+        View view;
+        switch (viewType) {
+            case GAS_ENTRY_VIEWTYPE:
+                view = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.fragment_gasentry, parent, false);
+                return new ViewHolder(view);
+            default:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_serviceentry, parent, false);
+                return new ViewHolder(view);
+
+        }
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        View holderView = holder.mView;
+        int viewType = getItemViewType(position);
+        switch (viewType) {
+            case GAS_ENTRY_VIEWTYPE:
+                GasEntry gasEntry = (GasEntry)(holder.mItem);
+                ((TextView)(holderView.findViewById(R.id.content))).setText(String.valueOf(gasEntry.getGallons()));
+                break;
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,20 +83,16 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public LogEntry mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mItem.toString() + "'";
         }
     }
 }

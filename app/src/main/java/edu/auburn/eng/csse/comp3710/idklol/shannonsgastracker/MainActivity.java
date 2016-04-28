@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(LogEntry item) {
         // Do nothing
     }
 }
