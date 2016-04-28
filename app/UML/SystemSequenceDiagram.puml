@@ -1,7 +1,31 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor User
+
+group SD001
+User -> SGT: start
+SGT --> User: splash screen displayed
+User <-- SGT: display Service Log
+
+
+group Create New Log Entry
+User -> SGT: entry type
+User -> SGT: odometer reading
+User -> SGT: other information
+SGT --> User: creation confirmation
+end
+
+group Update Log Entry
+User -> SGT: select log entry
+SGT --> User: current state
+User -> SGT: new information
+SGT --> User: update confirmation
+end
+
+group Delete Log Entry
+User -> SGT: select log entry
+User -> SGT: delete entry
+SGT --> User: delete confirmation
+end
+end
 @enduml
