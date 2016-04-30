@@ -1,15 +1,16 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent;
-
-public class MainActivity extends AppCompatActivity implements ServiceEntryListFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ServiceEntryListFragment.OnListFragmentInteractionListener,
+        LogEntryCreationFragment.LogEntryCreationFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,21 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_new_gas_record:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.current_fragment, LogEntryCreationFragment.newInstance())
+                        .commit();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onListFragmentInteraction(LogEntry item) {
         // Do nothing
     }
+
 }
