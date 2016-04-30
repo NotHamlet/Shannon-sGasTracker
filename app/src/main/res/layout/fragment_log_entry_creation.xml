@@ -1,18 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.LogEntryCreationFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/text_margin"
+              android:orientation="vertical"
+              tools:context="edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.LogEntryCreationFragment">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/input_layout_odometer"
+            android:id="@+id/input_odometer"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:hint="@string/odometer_input_label"/>
-        </android.support.design.widget.TextInputLayout>
+            android:hint="@string/odometer_input_label"
+            android:inputType="numberDecimal"/>
+    </android.support.design.widget.TextInputLayout>
 
-</FrameLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_gallons"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="@string/gallons_input_label"
+            android:inputType="numberDecimal"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_price"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="@string/price_input_label"
+            android:inputType="numberDecimal"/>
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>

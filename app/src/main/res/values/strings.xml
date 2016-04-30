@@ -8,6 +8,8 @@
     <string name="list_item_gas_price_label">$%1$.2f</string>
 
     <string name="odometer_input_label">Miles on Vehicle</string>
+    <string name="gallons_input_label">Gallons Purchased</string>
+    <string name="price_input_label">Price/Gallon</string>
 
     <!--TODO: Figure out formatting for Odometer readings: ~Try TOTALMILES(DIFF) -->
 
