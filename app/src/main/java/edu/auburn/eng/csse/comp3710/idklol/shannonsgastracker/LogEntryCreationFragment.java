@@ -4,7 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -39,7 +43,7 @@ public class LogEntryCreationFragment extends Fragment {
      *
      * @return A new instance of fragment LogEntryCreationFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    // TODO: Add parameter to reflect VehicleLog to which this entry will be added
     public static LogEntryCreationFragment newInstance() {
         LogEntryCreationFragment fragment = new LogEntryCreationFragment();
         Bundle args = new Bundle();
@@ -57,6 +61,10 @@ public class LogEntryCreationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Enable display of custom app bar actions
+        setHasOptionsMenu(true);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_log_entry_creation, container, false);
     }
@@ -79,6 +87,26 @@ public class LogEntryCreationFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.log_entry_creation, menu);
+
+        if (mListener instanceof AppCompatActivity) {
+            ((AppCompatActivity)mListener).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //TODO figure out if this is the best way to implement up button function
+            case android.R.id.home:
+                mListener.displayListFragment();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -90,6 +118,6 @@ public class LogEntryCreationFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface LogEntryCreationFragmentListener {
-        // TODO: Update argument type and name
+        void displayListFragment();
     }
 }

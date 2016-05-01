@@ -19,16 +19,12 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        ServiceEntryListFragment newFragment = ServiceEntryListFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.current_fragment, newFragment);
-        transaction.commit();
+        displayListFragment();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -38,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
             case R.id.action_new_gas_record:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.current_fragment, LogEntryCreationFragment.newInstance())
+                        .addToBackStack(null)
                         .commit();
                 break;
         }
@@ -50,4 +47,11 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
         // Do nothing
     }
 
+    @Override
+    public void displayListFragment() {
+        ServiceEntryListFragment newFragment = ServiceEntryListFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.current_fragment, newFragment);
+        transaction.commit();
+    }
 }

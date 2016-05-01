@@ -3,10 +3,13 @@ package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -71,6 +74,9 @@ public class ServiceEntryListFragment extends Fragment {
             }
             recyclerView.setAdapter(new ServiceEntryRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
+
+        // Enable display of custom app bar actions
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -90,6 +96,16 @@ public class ServiceEntryListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+
+        if (mListener instanceof AppCompatActivity) {
+            ((AppCompatActivity)mListener).getSupportActionBar().setHomeButtonEnabled(false);
+        }
     }
 
     /**
