@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<ServiceEntryRecyclerViewAdapter.ViewHolder> {
 
     private static final int GAS_ENTRY_VIEWTYPE = 1;
+    private static final int SERVICE_ENTRY_VIEWTYPE = 2;
     private final VehicleLog mVehicleLog;
     private final OnListFragmentInteractionListener mListener;
 
@@ -34,6 +35,9 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
             return GAS_ENTRY_VIEWTYPE;
         }
 
+        if (mVehicleLog.get(position) instanceof  ServiceEntry) {
+            return SERVICE_ENTRY_VIEWTYPE;
+        }
         return super.getItemViewType(position);
     }
 
@@ -45,6 +49,11 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
                 view = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.list_item_gasentry, parent, false);
                 return new ViewHolder(view);
+            case SERVICE_ENTRY_VIEWTYPE:
+                view = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.list_item_serviceentry, parent, false);
+                return new ViewHolder(view);
+
             default:
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_logentry, parent, false);
@@ -61,6 +70,8 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
         Resources res = holder.mView.getContext().getResources();
 
         String odometerText;
+        String dateText;
+
         LogEntry entry = holder.mItem;
         switch (viewType) {
             case GAS_ENTRY_VIEWTYPE:
@@ -76,11 +87,22 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
                 ((TextView)(holderView.findViewById(R.id.price))).setText(String.valueOf(priceText));
 
                 break;
+
+            case SERVICE_ENTRY_VIEWTYPE:
+                ServiceEntry serviceEntry = (ServiceEntry)(entry);
+                odometerText = String.format(res.getString(R.string.list_item_odometer_label), entry.getOdometer());
+                ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(odometerText));
+
+                dateText = (new SimpleDateFormat("MM/dd/yyyy")).format(entry.getDate());
+                ((TextView)(holderView.findViewById(R.id.date))).setText(String.valueOf(dateText));
+
+
+                break;
             default:
                 odometerText = String.format(res.getString(R.string.list_item_odometer_label), entry.getOdometer());
                 ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(odometerText));
 
-                String dateText = (new SimpleDateFormat("MM/dd/yyyy")).format(entry.getDate());
+                dateText = (new SimpleDateFormat("MM/dd/yyyy")).format(entry.getDate());
                 ((TextView)(holderView.findViewById(R.id.date))).setText(String.valueOf(dateText));
 
                 break;

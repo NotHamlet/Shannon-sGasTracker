@@ -42,6 +42,9 @@ public class VehicleLog {
             if (n < 75) {
                 result.mEntries.add(GasEntry.randomEntry());
             }
+            else if (n < 90) {
+                result.mEntries.add(ServiceEntry.randomEntry());
+            }
             else {
                 result.mEntries.add(LogEntry.randomEntry());
             }
