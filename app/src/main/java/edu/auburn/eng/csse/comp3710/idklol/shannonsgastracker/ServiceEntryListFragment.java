@@ -72,7 +72,7 @@ public class ServiceEntryListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ServiceEntryRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ServiceEntryRecyclerViewAdapter(DummyContent.VEHICLE_LOG, mListener));
         }
 
         // Enable display of custom app bar actions

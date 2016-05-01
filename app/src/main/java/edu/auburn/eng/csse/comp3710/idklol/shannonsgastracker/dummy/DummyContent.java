@@ -7,6 +7,7 @@ import java.util.Map;
 
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.GasEntry;
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.LogEntry;
+import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.VehicleLog;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -20,6 +21,7 @@ public class DummyContent {
      * An array of sample (dummy) items.
      */
     public static final List<LogEntry> ITEMS = new ArrayList<>();
+    public static final VehicleLog VEHICLE_LOG;
 
     /**
      * A map of sample (dummy) items, by ID.
@@ -33,6 +35,8 @@ public class DummyContent {
         for (int i = 1; i <= COUNT; i++) {
             addItem(GasEntry.randomEntry());
         }
+
+        VEHICLE_LOG = VehicleLog.createRandomLog();
     }
 
     private static void addItem(LogEntry item) {

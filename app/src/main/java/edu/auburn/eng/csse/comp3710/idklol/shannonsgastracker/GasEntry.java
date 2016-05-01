@@ -17,6 +17,7 @@ public class GasEntry extends LogEntry {
         mPrice = 0;
     }
 
+    // TODO: remove this before release
     public static GasEntry randomEntry() {
         GasEntry newEntry = new GasEntry();
         Random rand = new Random();

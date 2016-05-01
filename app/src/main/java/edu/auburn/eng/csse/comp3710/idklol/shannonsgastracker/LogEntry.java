@@ -5,6 +5,7 @@ package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
  */
 
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 public class LogEntry {
@@ -15,7 +16,6 @@ public class LogEntry {
     public Date getDate() {
         return mDate;
     }
-
 
     public void setDate(Date date) {
         mDate = date;
@@ -33,5 +33,11 @@ public class LogEntry {
         mOdometer = odometer;
     }
 
-
+    // TODO: Remove this before release
+    public static LogEntry randomEntry() {
+        LogEntry result = new LogEntry();
+        Random r = new Random();
+        result.setOdometer((10000+r.nextInt(990000))/10.0);
+        return result;
+    }
 }

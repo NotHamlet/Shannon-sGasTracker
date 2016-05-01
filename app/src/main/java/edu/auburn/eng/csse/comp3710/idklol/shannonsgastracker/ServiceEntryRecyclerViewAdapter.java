@@ -10,6 +10,7 @@ import android.widget.TextView;
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.ServiceEntryListFragment.OnListFragmentInteractionListener;
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent.DummyItem;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -20,17 +21,17 @@ import java.util.List;
 public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<ServiceEntryRecyclerViewAdapter.ViewHolder> {
 
     private static final int GAS_ENTRY_VIEWTYPE = 1;
-    private final List<LogEntry> mValues;
+    private final VehicleLog mVehicleLog;
     private final OnListFragmentInteractionListener mListener;
 
-    public ServiceEntryRecyclerViewAdapter(List<LogEntry> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public ServiceEntryRecyclerViewAdapter(VehicleLog vehicleLog, OnListFragmentInteractionListener listener) {
+        mVehicleLog = vehicleLog;
         mListener = listener;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mValues.get(position) instanceof  GasEntry) {
+        if (mVehicleLog.get(position) instanceof  GasEntry) {
             return GAS_ENTRY_VIEWTYPE;
         }
 
@@ -55,15 +56,18 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.mItem = mVehicleLog.get(position);
         View holderView = holder.mView;
         int viewType = getItemViewType(position);
         Resources res = holder.mView.getContext().getResources();
+
+        String odometerText;
+        LogEntry entry = holder.mItem;
         switch (viewType) {
             case GAS_ENTRY_VIEWTYPE:
-                GasEntry gasEntry = (GasEntry)(holder.mItem);
+                GasEntry gasEntry = (GasEntry)(entry);
 
-                String odometerText = String.format(res.getString(R.string.list_item_odometer_label), gasEntry.getOdometer());
+                odometerText = String.format(res.getString(R.string.list_item_odometer_label), gasEntry.getOdometer());
                 ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(odometerText));
 
                 String gallonsText = String.format(res.getString(R.string.list_item_gallons_label), gasEntry.getGallons());
@@ -71,6 +75,14 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
 
                 String priceText = String.format(res.getString(R.string.list_item_gas_price_label), gasEntry.getPrice());
                 ((TextView)(holderView.findViewById(R.id.price))).setText(String.valueOf(priceText));
+
+                break;
+            default:
+                odometerText = String.format(res.getString(R.string.list_item_odometer_label), entry.getOdometer());
+                ((TextView)(holderView.findViewById(R.id.odometer))).setText(String.valueOf(odometerText));
+
+                String dateText = (new SimpleDateFormat("MM/dd/yyyy")).format(entry.getDate());
+                ((TextView)(holderView.findViewById(R.id.date))).setText(String.valueOf(dateText));
 
                 break;
         }
@@ -89,7 +101,7 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mVehicleLog.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
