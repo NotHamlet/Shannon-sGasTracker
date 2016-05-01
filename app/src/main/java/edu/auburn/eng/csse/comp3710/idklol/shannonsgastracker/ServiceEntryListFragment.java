@@ -104,6 +104,7 @@ public class ServiceEntryListFragment extends Fragment {
         inflater.inflate(R.menu.main, menu);
 
         if (mListener instanceof AppCompatActivity) {
+            ((AppCompatActivity)mListener).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             ((AppCompatActivity)mListener).getSupportActionBar().setHomeButtonEnabled(false);
         }
     }
