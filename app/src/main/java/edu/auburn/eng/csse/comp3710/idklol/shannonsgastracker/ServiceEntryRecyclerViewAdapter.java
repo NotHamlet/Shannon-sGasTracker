@@ -11,7 +11,6 @@ import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.ServiceEntryListFr
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent.DummyItem;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -44,11 +43,11 @@ public class ServiceEntryRecyclerViewAdapter extends RecyclerView.Adapter<Servic
         switch (viewType) {
             case GAS_ENTRY_VIEWTYPE:
                 view = LayoutInflater.from(parent.getContext()).
-                        inflate(R.layout.fragment_gasentry, parent, false);
+                        inflate(R.layout.list_item_gasentry, parent, false);
                 return new ViewHolder(view);
             default:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.fragment_serviceentry, parent, false);
+                        .inflate(R.layout.list_item_logentry, parent, false);
                 return new ViewHolder(view);
 
         }
