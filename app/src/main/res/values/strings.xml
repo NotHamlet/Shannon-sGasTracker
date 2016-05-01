@@ -12,6 +12,7 @@
     <string name="odometer_input_label">Miles on Vehicle</string>
     <string name="gallons_input_label">Gallons Purchased</string>
     <string name="price_input_label">Price/Gallon</string>
+    <string name="log_entry_creation_title">New Log Entry</string>
 
     <!--TODO: Figure out formatting for Odometer readings: ~Try TOTALMILES(DIFF) -->
 

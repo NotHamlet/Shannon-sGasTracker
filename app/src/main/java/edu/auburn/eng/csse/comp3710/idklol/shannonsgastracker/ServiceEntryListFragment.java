@@ -1,5 +1,6 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -104,8 +105,13 @@ public class ServiceEntryListFragment extends Fragment {
         inflater.inflate(R.menu.main, menu);
 
         if (mListener instanceof AppCompatActivity) {
-            ((AppCompatActivity)mListener).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((AppCompatActivity)mListener).getSupportActionBar().setHomeButtonEnabled(false);
+            android.support.v7.app.ActionBar bar = ((AppCompatActivity)mListener).getSupportActionBar();
+            if (bar != null) {
+                bar.setDisplayHomeAsUpEnabled(false);
+                bar.setHomeButtonEnabled(false);
+                bar.setTitle(R.string.app_name);
+                bar.setDisplayShowTitleEnabled(true);
+            }
         }
     }
 

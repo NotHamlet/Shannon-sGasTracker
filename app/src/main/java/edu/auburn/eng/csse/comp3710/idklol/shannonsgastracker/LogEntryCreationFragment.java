@@ -1,5 +1,6 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
+import android.content.ContentProvider;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent;
 
 
 /**
@@ -30,6 +34,7 @@ public class LogEntryCreationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private VehicleLog mVehicleLog = DummyContent.VEHICLE_LOG;
 
     private LogEntryCreationFragmentListener mListener;
 
@@ -66,7 +71,8 @@ public class LogEntryCreationFragment extends Fragment {
         setHasOptionsMenu(true);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_log_entry_creation, container, false);
+        View view = inflater.inflate(R.layout.fragment_log_entry_creation, container, false);
+        return view;
     }
 
 
@@ -92,7 +98,12 @@ public class LogEntryCreationFragment extends Fragment {
         inflater.inflate(R.menu.log_entry_creation, menu);
 
         if (mListener instanceof AppCompatActivity) {
-            ((AppCompatActivity)mListener).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            android.support.v7.app.ActionBar bar = ((AppCompatActivity)mListener).getSupportActionBar();
+            if (bar != null) {
+                bar.setDisplayHomeAsUpEnabled(true);
+                bar.setTitle(R.string.log_entry_creation_title);
+                bar.setDisplayShowTitleEnabled(true);
+            }
         }
     }
 
@@ -102,9 +113,34 @@ public class LogEntryCreationFragment extends Fragment {
             //TODO figure out if this is the best way to implement up button function
             case android.R.id.home:
                 mListener.displayListFragment();
+                break;
+            case R.id.action_done:
+                createNewGasEntry();
+                mListener.displayListFragment();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createNewGasEntry() {
+        View view = getView();
+
+        if (view != null) {
+            String gallonString = ((EditText)(view.findViewById(R.id.input_gallons))).getText().toString();
+            double gallonsValue = Double.parseDouble(gallonString);
+            String priceString = ((EditText)(view.findViewById(R.id.input_price))).getText().toString();
+            double priceValue = Double.parseDouble(priceString);
+            String odometerString = ((EditText)(view.findViewById(R.id.input_odometer))).getText().toString();
+            double odometerValue = Double.parseDouble(odometerString);
+
+            GasEntry newEntry = new GasEntry();
+            newEntry.setGallons(gallonsValue);
+            newEntry.setPrice(priceValue);
+            newEntry.setOdometer(odometerValue);
+
+            mVehicleLog.addEntry(newEntry);
+        }
     }
 
     /**
