@@ -10,5 +10,4 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.ServiceEntryListFragment"
-    tools:listitem="@layout/list_item_logentry"/>
+    tools:context="edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.ServiceEntryListFragment"/>

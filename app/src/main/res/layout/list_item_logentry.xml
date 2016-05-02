@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:paddingTop="16dp"
+              android:paddingBottom="20dp"
               android:orientation="horizontal">
 
     <ImageView
@@ -9,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:layout_marginEnd="@dimen/text_margin"
+        android:paddingStart="0dp"
+        android:paddingEnd="32dp"
         android:src="@drawable/ic_description_24dp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center_vertical"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -21,21 +24,20 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/odometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceListItem"
+            />
+
+        <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:textAppearance="?attr/textAppearanceListItem"/>
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/odometer"
-        android:layout_weight="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAlignment="textEnd"
-        android:textAppearance="?attr/textAppearanceListItem"
-        />
 </LinearLayout>
