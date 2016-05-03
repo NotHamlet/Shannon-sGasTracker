@@ -148,7 +148,7 @@ public class XMLArchiver implements VehicleLogArchiver {
                     .attribute("", ATTR_ID, gasE.getID())
                     .attribute("", ATTR_ODOMETER, Double.toString(gasE.getOdometer()))
                     .attribute("", ATTR_GALLONS, Double.toString(gasE.getGallons()))
-                    .attribute("", ATTR_PRICE, Double.toString(gasE.getGallons()))
+                    .attribute("", ATTR_PRICE, Double.toString(gasE.getPrice()))
                     .endTag("", TAG_GAS_ENTRY);
         }
         else if (entry instanceof ServiceEntry) {

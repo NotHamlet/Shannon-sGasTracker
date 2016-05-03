@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import java.io.IOException;
 
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent;
 
@@ -61,6 +64,16 @@ public class LogEntryCreationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
+
+        VehicleLog log;
+        try {
+            log = (new XMLArchiver()).loadEntries(getContext());
+        } catch (IOException e) {
+            log = new VehicleLog();
+            e.printStackTrace();
+        }
+        mVehicleLog = log;
     }
 
     @Override
@@ -140,6 +153,13 @@ public class LogEntryCreationFragment extends Fragment {
             newEntry.setOdometer(odometerValue);
 
             mVehicleLog.addEntry(newEntry);
+            try {
+                (new XMLArchiver()).saveEntries(mVehicleLog, getContext());
+            } catch (IOException e) {
+                Log.e("XMLTest", "Error saving with new Log Entry");
+                e.printStackTrace();
+            }
+
         }
     }
 

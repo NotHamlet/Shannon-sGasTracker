@@ -71,25 +71,20 @@ public class ServiceEntryListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            VehicleLog log= new VehicleLog();
+
+            VehicleLog log;
             try {
                 log = (new XMLArchiver()).loadEntries(getContext());
             } catch (IOException e) {
+                log = new VehicleLog();
                 e.printStackTrace();
             }
+
             recyclerView.setAdapter(new ServiceEntryRecyclerViewAdapter(log, mListener));
         }
 
         // Enable display of custom app bar actions
         setHasOptionsMenu(true);
-
-        //TODO: Debugging lines (remove)
-        VehicleLogArchiver archTest = new XMLArchiver();
-        try {
-            archTest.saveEntries(DummyContent.VEHICLE_LOG, getContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         return view;
     }
