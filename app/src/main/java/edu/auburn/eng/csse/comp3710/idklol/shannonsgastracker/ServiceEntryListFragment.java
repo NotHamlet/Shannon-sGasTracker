@@ -1,6 +1,5 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,10 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent;
-import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent.DummyItem;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -74,7 +71,13 @@ public class ServiceEntryListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ServiceEntryRecyclerViewAdapter(DummyContent.VEHICLE_LOG, mListener));
+            VehicleLog log= new VehicleLog();
+            try {
+                log = (new XMLArchiver()).loadEntries(getContext());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            recyclerView.setAdapter(new ServiceEntryRecyclerViewAdapter(log, mListener));
         }
 
         // Enable display of custom app bar actions
@@ -83,7 +86,7 @@ public class ServiceEntryListFragment extends Fragment {
         //TODO: Debugging lines (remove)
         VehicleLogArchiver archTest = new XMLArchiver();
         try {
-            archTest.saveEntries(DummyContent.VEHICLE_LOG);
+            archTest.saveEntries(DummyContent.VEHICLE_LOG, getContext());
         } catch (IOException e) {
             e.printStackTrace();
         }

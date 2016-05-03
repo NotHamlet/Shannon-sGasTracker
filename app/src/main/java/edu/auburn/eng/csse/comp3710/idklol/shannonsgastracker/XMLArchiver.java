@@ -1,15 +1,23 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
+import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.Writer;
 
 /**
- * Implements the VehicleLogArchiver class to seriealize and deserialize XML representations of VehicleLog
+ * Implements the VehicleLogArchiver class to serialize and deserialize XML representations
+ *      of VehicleLog instances
  */
 public class XMLArchiver implements VehicleLogArchiver {
     private static final String TAG_VEHICLE_LOG = "VehicleLog";
@@ -25,27 +33,111 @@ public class XMLArchiver implements VehicleLogArchiver {
 
 
     @Override
-    public void loadEntries(VehicleLog destination) {
+    public VehicleLog loadEntries(Context context) throws IOException {
 
+        // TODO: Clean this up to make better use of XML (Currently a bit of a hack)
+
+        VehicleLog newLog = new VehicleLog();
+
+        XmlPullParser xpp = Xml.newPullParser();
+        String fileName = String.format("%s.vlog", "default");
+        try {
+            xpp.setInput(context.openFileInput(fileName), "UTF-8");
+        } catch (Exception e) {
+            return newLog;
+        }
+
+
+        try {
+            int eventType = xpp.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        if (xpp.getName().equals(TAG_VEHICLE_LOG)){
+                            buildVehicleLog(xpp, newLog);
+                        }
+                        break;
+                }
+                eventType = xpp.next();
+            }
+        } catch (XmlPullParserException e) {
+            Log.e("XMLTest", "Some sort of XML Issue has transpired!");
+            e.printStackTrace();
+            return newLog;
+        }
+
+        System.out.println("End document");
+
+        return newLog;
+    }
+
+    private void buildVehicleLog(XmlPullParser xpp, VehicleLog newlog)
+            throws IOException, XmlPullParserException {
+
+        int eventType = xpp.nextTag();
+        while (eventType != XmlPullParser.END_TAG) {
+            String tag = xpp.getName();
+            Log.i("XMLTest", tag);
+            LogEntry newEntry;
+            if (tag.equals(TAG_GAS_ENTRY)) {
+                GasEntry gasEntry= new GasEntry();
+                String gallonsAttr = xpp.getAttributeValue("",ATTR_GALLONS);
+                if (gallonsAttr != null) {
+                    gasEntry.setGallons(Double.valueOf(gallonsAttr));
+                }
+                String priceAttr = xpp.getAttributeValue("",ATTR_PRICE);
+                if (priceAttr != null) {
+                    gasEntry.setPrice(Double.valueOf(priceAttr));
+                }
+                newEntry = gasEntry;
+            }
+            else if (tag.equals(TAG_SERVICE_ENTRY)) {
+                ServiceEntry serviceEntry = new ServiceEntry();
+                String serviceTypeAttr = xpp.getAttributeValue("",ATTR_SERVICE_TYPE);
+                if (serviceTypeAttr != null) {
+                    serviceEntry.setServiceType(serviceTypeAttr);
+                }
+                newEntry = serviceEntry;
+            }
+            else {
+                newEntry = new LogEntry();
+            }
+
+
+            String odometerAttr = xpp.getAttributeValue("", ATTR_ODOMETER);
+            if (odometerAttr != null) {
+                newEntry.setOdometer(Double.valueOf(odometerAttr));
+
+            }
+            String idAttr = xpp.getAttributeValue("", ATTR_ID);
+            if (idAttr != null) {
+                newEntry.setID(idAttr);
+
+            }
+
+            newlog.addEntry(newEntry);
+
+            xpp.nextTag();
+            eventType = xpp.nextTag();
+
+        }
     }
 
     @Override
-    public void saveEntries(VehicleLog source) throws IOException{
+    public void saveEntries(VehicleLog source, Context context) throws IOException{
         XmlSerializer ser = Xml.newSerializer();
-        StringWriter writer = new StringWriter();
-        ser.setOutput(writer);
+        String fileName = String.format("%s.vlog", "default");
+        ser.setOutput(context.openFileOutput(fileName, Context.MODE_PRIVATE), "UTF-8");
 
         ser.startDocument("UTF-8", true);
-        ser.text("\n");
         ser.startTag("", TAG_VEHICLE_LOG);
-        ser.text("\n");
         for (int i = 0; i < source.size(); i++) {
             serializeEntry(source.get(i),ser);
         }
         ser.endTag("", TAG_VEHICLE_LOG);
         ser.endDocument();
 
-        Log.i("XMLtest", writer.toString());
+//        Log.i("XMLTest", writer.toString());
 
     }
 
@@ -57,8 +149,7 @@ public class XMLArchiver implements VehicleLogArchiver {
                     .attribute("", ATTR_ODOMETER, Double.toString(gasE.getOdometer()))
                     .attribute("", ATTR_GALLONS, Double.toString(gasE.getGallons()))
                     .attribute("", ATTR_PRICE, Double.toString(gasE.getGallons()))
-                    .endTag("", TAG_GAS_ENTRY)
-                    .text("\n");
+                    .endTag("", TAG_GAS_ENTRY);
         }
         else if (entry instanceof ServiceEntry) {
             ServiceEntry serviceE = (ServiceEntry)entry;
@@ -66,15 +157,13 @@ public class XMLArchiver implements VehicleLogArchiver {
                     .attribute("", ATTR_ID, serviceE.getID())
                     .attribute("", ATTR_ODOMETER, Double.toString(serviceE.getOdometer()))
                     .attribute("", ATTR_SERVICE_TYPE, serviceE.getServiceType())
-                    .endTag("", TAG_SERVICE_ENTRY)
-                    .text("\n");
+                    .endTag("", TAG_SERVICE_ENTRY);
         }
         else {
             ser.startTag("", TAG_ENTRY)
                     .attribute("", ATTR_ID, entry.getID())
                     .attribute("", ATTR_ODOMETER, Double.toString(entry.getOdometer()))
-                    .endTag("", TAG_ENTRY)
-                    .text("\n");
+                    .endTag("", TAG_ENTRY);
         }
     }
 }

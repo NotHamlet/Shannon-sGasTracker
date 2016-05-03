@@ -25,6 +25,10 @@ public class LogEntry {
         return ID;
     }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     public double getOdometer() {
         return mOdometer;
     }
