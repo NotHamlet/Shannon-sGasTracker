@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent;
 import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent.DummyItem;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -78,6 +79,15 @@ public class ServiceEntryListFragment extends Fragment {
 
         // Enable display of custom app bar actions
         setHasOptionsMenu(true);
+
+        //TODO: Debugging lines (remove)
+        VehicleLogArchiver archTest = new XMLArchiver();
+        try {
+            archTest.saveEntries(DummyContent.VEHICLE_LOG);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return view;
     }
 
