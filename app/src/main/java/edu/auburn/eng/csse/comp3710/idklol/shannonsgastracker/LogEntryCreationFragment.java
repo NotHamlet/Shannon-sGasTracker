@@ -48,7 +48,6 @@ public class LogEntryCreationFragment extends Fragment {
      *
      * @return A new instance of fragment LogEntryCreationFragment.
      */
-    // TODO: Add parameter to reflect VehicleLog to which this entry will be added
     public static LogEntryCreationFragment newInstance() {
         LogEntryCreationFragment fragment = new LogEntryCreationFragment();
         Bundle args = new Bundle();

@@ -26,11 +26,7 @@ import java.io.IOException;
  * create an instance of this fragment.
  */
 public class LogEntryDetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_ENTRY_ID = "entry_id";
-
-    // TODO: Rename and change types of parameters
 
     private OnFragmentInteractionListener mListener;
     private String mEntryID;
@@ -44,10 +40,9 @@ public class LogEntryDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param entryID Parameter 1.
+     * @param entryID UUID of Entry to be displayed by the fragment
      * @return A new instance of fragment LogEntryDetailFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LogEntryDetailFragment newInstance(String entryID) {
         LogEntryDetailFragment fragment = new LogEntryDetailFragment();
         Bundle args = new Bundle();
@@ -87,7 +82,7 @@ public class LogEntryDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        // TODO Populate views with data from mEntry
+        // Populate views with data from mEntry
         populateView(view);
 
         return view;
