@@ -154,11 +154,23 @@ public class LogEntryCreationFragment extends Fragment {
                 case TYPE_GAS_ENTRY:
                     GasEntry gasEntry = new GasEntry();
                     String gallonString = ((EditText) (view.findViewById(R.id.input_gallons))).getText().toString();
-                    double gallonsValue = Double.parseDouble(gallonString);
+                    double gallonsValue;
+                    try {
+                        gallonsValue = Double.parseDouble(gallonString);
+                    }
+                    catch (Exception e) {
+                        gallonsValue = 0;
+                    }
                     gasEntry.setGallons(gallonsValue);
 
                     String priceString = ((EditText) (view.findViewById(R.id.input_price))).getText().toString();
-                    double priceValue = Double.parseDouble(priceString);
+                    double priceValue;
+                    try {
+                        priceValue = Double.parseDouble(priceString);
+                    }
+                    catch (Exception e) {
+                        priceValue= 0;
+                    }
                     gasEntry.setPrice(priceValue);
 
                     newEntry = gasEntry;
@@ -175,7 +187,13 @@ public class LogEntryCreationFragment extends Fragment {
             }
 
             String odometerString = ((EditText)(view.findViewById(R.id.input_odometer))).getText().toString();
-            double odometerValue = Double.parseDouble(odometerString);
+            double odometerValue;
+            try {
+                odometerValue = Double.parseDouble(odometerString);
+            }
+            catch (Exception e) {
+                odometerValue = 0;
+            }
             newEntry.setOdometer(odometerValue);
 
             String noteString = ((EditText)(view.findViewById(R.id.input_note))).getText().toString();
