@@ -69,6 +69,16 @@ public class VehicleLog {
         return result;
     }
 
+    public LogEntry getEntryWithID(String entryID) {
+        for (LogEntry entry : mEntries) {
+            if (entry.getID().equals(entryID)) {
+                return entry;
+            }
+        }
+
+        return null;
+    }
+
 
     private class OdometerComparator implements Comparator<LogEntry>{
 

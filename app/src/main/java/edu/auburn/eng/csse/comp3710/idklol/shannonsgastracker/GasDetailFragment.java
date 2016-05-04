@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 
 /**
@@ -20,14 +25,13 @@ import android.view.ViewGroup;
 public class GasDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_ENTRY_ID = "entry_id";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private String mEntryID;
+    private LogEntry mEntry;
 
     public GasDetailFragment() {
         // Required empty public constructor
@@ -37,16 +41,14 @@ public class GasDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param entryID Parameter 1.
      * @return A new instance of fragment GasDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GasDetailFragment newInstance(String param1, String param2) {
+    public static GasDetailFragment newInstance(String entryID) {
         GasDetailFragment fragment = new GasDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_ENTRY_ID, entryID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,22 +57,69 @@ public class GasDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mEntryID = getArguments().getString(ARG_ENTRY_ID);
         }
+
+        // Get the entry with the given ID and store it
+        VehicleLog log;
+        try {
+            log = (new XMLArchiver()).loadEntries(getContext());
+        } catch (IOException e) {
+            log = new VehicleLog();
+            e.printStackTrace();
+        }
+
+        mEntry = log.getEntryWithID(mEntryID);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+
+        // TODO Populate views with data from mEntry
+        populateView(view);
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    private void populateView(View view) {
+        if (mEntry == null) {
+            return;
+        }
+
+        TextView odometerTextView = (TextView) view.findViewById(R.id.detailOdometer);
+        TextView noteTextView = (TextView) view.findViewById(R.id.detailNote);
+
+        odometerTextView.setText(Double.toString(mEntry.getOdometer()));
+        noteTextView.setText(mEntry.getNote());
+
+        if (mEntry instanceof GasEntry) {
+            GasEntry gasEntry = (GasEntry)mEntry;
+            TextView gallonsTextView = (TextView) view.findViewById(R.id.detailGallons);
+            TextView priceTextView = (TextView) view.findViewById(R.id.detailPrice);
+
+            gallonsTextView.setText(Double.toString(gasEntry.getGallons()));
+            priceTextView.setText(Double.toString(gasEntry.getPrice()));
+            view.findViewById(R.id.detailGallonsContainer).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.detailPriceContainer).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.detailServiceContainer).setVisibility(View.GONE);
+        }
+        else if (mEntry instanceof ServiceEntry) {
+            ServiceEntry serviceEntry = (ServiceEntry)mEntry;
+            TextView gallonsTextView = (TextView) view.findViewById(R.id.detailServiceType);
+            gallonsTextView.setText(serviceEntry.getServiceType());
+            view.findViewById(R.id.detailGallonsContainer).setVisibility(View.GONE);
+            view.findViewById(R.id.detailPriceContainer).setVisibility(View.GONE);
+            view.findViewById(R.id.detailServiceContainer).setVisibility(View.VISIBLE);
+        }
+        else {
+            view.findViewById(R.id.detailGallonsContainer).setVisibility(View.GONE);
+            view.findViewById(R.id.detailPriceContainer).setVisibility(View.GONE);
+            view.findViewById(R.id.detailServiceContainer).setVisibility(View.GONE);
         }
     }
 
@@ -102,7 +151,6 @@ public class GasDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
     }
 }

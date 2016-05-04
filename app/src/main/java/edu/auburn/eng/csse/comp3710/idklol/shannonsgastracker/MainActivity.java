@@ -10,7 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements ServiceEntryListFragment.OnListFragmentInteractionListener,
-        LogEntryCreationFragment.LogEntryCreationFragmentListener {
+        LogEntryCreationFragment.LogEntryCreationFragmentListener,
+        GasDetailFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
 
     @Override
     public void onListFragmentInteraction(LogEntry item) {
-        // Do nothing
+        GasDetailFragment newFragment = GasDetailFragment.newInstance(item.getID());
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.current_fragment, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
