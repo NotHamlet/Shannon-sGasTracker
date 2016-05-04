@@ -19,8 +19,6 @@ import android.widget.Spinner;
 
 import java.io.IOException;
 
-import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,11 +33,10 @@ public class LogEntryCreationFragment extends Fragment {
     private static final int TYPE_SERVICE_ENTRY = 1;
     private static final int TYPE_LOG_ENTRY = 2;
 
-    private VehicleLog mVehicleLog = DummyContent.VEHICLE_LOG;
+    private VehicleLog mVehicleLog;
 
     private LogEntryCreationFragmentListener mListener;
-
-    private int mCurrentSpinnerPos = 0;
+    private Spinner mTypeSpinner;
 
     public LogEntryCreationFragment() {
         // Required empty public constructor
@@ -62,9 +59,6 @@ public class LogEntryCreationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-
 
         VehicleLog log;
         try {
@@ -98,6 +92,7 @@ public class LogEntryCreationFragment extends Fragment {
         Spinner typeSpinner = (Spinner)view.findViewById(R.id.entry_type_spinner);
         typeSpinner.setAdapter(adapter);
         typeSpinner.setOnItemSelectedListener(new EntryTypeSpinnerListener());
+        mTypeSpinner = typeSpinner;
 
         return view;
     }
@@ -156,7 +151,7 @@ public class LogEntryCreationFragment extends Fragment {
         if (view != null) {
             // TODO: Add error checking and either instantiate with default values or flag required inputs
             LogEntry newEntry;
-            switch (mCurrentSpinnerPos) {
+            switch (mTypeSpinner.getSelectedItemPosition()) {
                 case TYPE_GAS_ENTRY:
                     GasEntry gasEntry = new GasEntry();
                     String gallonString = ((EditText) (view.findViewById(R.id.input_gallons))).getText().toString();
@@ -217,26 +212,26 @@ public class LogEntryCreationFragment extends Fragment {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            switch (position){
-                case TYPE_GAS_ENTRY:
-                    getView().findViewById(R.id.input_gallons).setVisibility(View.VISIBLE);
-                    getView().findViewById(R.id.input_price).setVisibility(View.VISIBLE);
-                    getView().findViewById(R.id.input_service_type).setVisibility(View.GONE);
-                    break;
-                case TYPE_SERVICE_ENTRY:
-                    getView().findViewById(R.id.input_gallons).setVisibility(View.GONE);
-                    getView().findViewById(R.id.input_price).setVisibility(View.GONE);
-                    getView().findViewById(R.id.input_service_type).setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    getView().findViewById(R.id.input_gallons).setVisibility(View.GONE);
-                    getView().findViewById(R.id.input_price).setVisibility(View.GONE);
-                    getView().findViewById(R.id.input_service_type).setVisibility(View.GONE);
-
-                    break;
+            View parentView = getView();
+            if (parentView != null) {
+                switch (position) {
+                    case TYPE_GAS_ENTRY:
+                        parentView.findViewById(R.id.input_gallons).setVisibility(View.VISIBLE);
+                        parentView.findViewById(R.id.input_price).setVisibility(View.VISIBLE);
+                        parentView.findViewById(R.id.input_service_type).setVisibility(View.GONE);
+                        break;
+                    case TYPE_SERVICE_ENTRY:
+                        parentView.findViewById(R.id.input_gallons).setVisibility(View.GONE);
+                        parentView.findViewById(R.id.input_price).setVisibility(View.GONE);
+                        parentView.findViewById(R.id.input_service_type).setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        parentView.findViewById(R.id.input_gallons).setVisibility(View.GONE);
+                        parentView.findViewById(R.id.input_price).setVisibility(View.GONE);
+                        parentView.findViewById(R.id.input_service_type).setVisibility(View.GONE);
+                        break;
+                }
             }
-
-            mCurrentSpinnerPos = position;
         }
 
         @Override
