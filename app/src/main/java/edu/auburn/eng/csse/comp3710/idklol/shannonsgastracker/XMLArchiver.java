@@ -8,18 +8,14 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 
 /**
  * Implements the VehicleLogArchiver class to serialize and deserialize XML representations
  *      of VehicleLog instances
  */
 public class XMLArchiver implements VehicleLogArchiver {
+
     private static final String TAG_VEHICLE_LOG = "VehicleLog";
     private static final String TAG_GAS_ENTRY = "GasEntry";
     private static final String TAG_SERVICE_ENTRY = "ServiceEntry";
