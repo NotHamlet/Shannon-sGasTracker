@@ -20,7 +20,9 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        displayListFragment();
+        if (savedInstanceState == null) {
+            displayListFragment();
+        }
     }
 
     @Override
