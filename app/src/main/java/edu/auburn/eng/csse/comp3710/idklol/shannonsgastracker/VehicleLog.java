@@ -79,6 +79,14 @@ public class VehicleLog {
         return null;
     }
 
+    public void deleteEntryWithID(String entryID) {
+        for (int i = 0; i < mEntries.size(); i++) {
+            if (mEntries.get(i).getID().equals(entryID)) {
+                mEntries.remove(i);
+                i--;
+            }
+        }
+    }
 
     private class OdometerComparator implements Comparator<LogEntry>{
 

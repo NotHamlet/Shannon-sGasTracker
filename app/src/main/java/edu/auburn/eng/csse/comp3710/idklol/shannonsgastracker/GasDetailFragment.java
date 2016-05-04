@@ -4,7 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -77,6 +82,10 @@ public class GasDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Enable display of custom app bar actions
+        setHasOptionsMenu(true);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
@@ -140,6 +149,54 @@ public class GasDetailFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.log_entry_detail, menu);
+
+        if (mListener instanceof AppCompatActivity) {
+            android.support.v7.app.ActionBar bar = ((AppCompatActivity)mListener).getSupportActionBar();
+            if (bar != null) {
+                bar.setDisplayHomeAsUpEnabled(true);
+                bar.setTitle(R.string.log_entry_creation_title);
+                bar.setDisplayShowTitleEnabled(true);
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //TODO figure out if this is the best way to implement up button function
+            case android.R.id.home:
+                mListener.displayListFragment();
+                break;
+            case R.id.action_delete:
+                deleteCurrentEntry();
+                mListener.displayListFragment();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteCurrentEntry() {
+        VehicleLog log;
+        try {
+            log = new XMLArchiver().loadEntries(getContext());
+        } catch (IOException e) {
+            log = new VehicleLog();
+            e.printStackTrace();
+        }
+
+        log.deleteEntryWithID(mEntryID);
+        try {
+            new XMLArchiver().saveEntries(log, getContext());
+        } catch (IOException e) {
+            Log.e("XMLTest", "Error saving Log after removing LogEntry");
+            e.printStackTrace();
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -151,6 +208,6 @@ public class GasDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-
+        void displayListFragment();
     }
 }
