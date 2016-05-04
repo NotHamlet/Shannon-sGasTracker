@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingTop="20dp"
 
-    tools:context="edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.GasDetailFragment">
+    tools:context=".LogEntryDetailFragment">
 
 
         <LinearLayout

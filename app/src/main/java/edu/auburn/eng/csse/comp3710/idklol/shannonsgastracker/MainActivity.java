@@ -1,17 +1,15 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
-import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements ServiceEntryListFragment.OnListFragmentInteractionListener,
         LogEntryCreationFragment.LogEntryCreationFragmentListener,
-        GasDetailFragment.OnFragmentInteractionListener {
+        LogEntryDetailFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
 
     @Override
     public void onListFragmentInteraction(LogEntry item) {
-        GasDetailFragment newFragment = GasDetailFragment.newInstance(item.getID());
+        LogEntryDetailFragment newFragment = LogEntryDetailFragment.newInstance(item.getID());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.current_fragment, newFragment);
         transaction.addToBackStack(null);

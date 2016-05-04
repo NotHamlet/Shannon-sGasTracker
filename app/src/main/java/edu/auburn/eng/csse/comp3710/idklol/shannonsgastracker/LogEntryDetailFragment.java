@@ -1,7 +1,6 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -15,20 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GasDetailFragment.OnFragmentInteractionListener} interface
+ * {@link LogEntryDetailFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GasDetailFragment#newInstance} factory method to
+ * Use the {@link LogEntryDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GasDetailFragment extends Fragment {
+public class LogEntryDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_ENTRY_ID = "entry_id";
@@ -39,7 +36,7 @@ public class GasDetailFragment extends Fragment {
     private String mEntryID;
     private LogEntry mEntry;
 
-    public GasDetailFragment() {
+    public LogEntryDetailFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +45,11 @@ public class GasDetailFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param entryID Parameter 1.
-     * @return A new instance of fragment GasDetailFragment.
+     * @return A new instance of fragment LogEntryDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GasDetailFragment newInstance(String entryID) {
-        GasDetailFragment fragment = new GasDetailFragment();
+    public static LogEntryDetailFragment newInstance(String entryID) {
+        LogEntryDetailFragment fragment = new LogEntryDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_ENTRY_ID, entryID);
         fragment.setArguments(args);
