@@ -1,101 +1,104 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-
     tools:context=".LogEntryDetailFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/DetailTitle"
+                        android:text="Odometer"
+                    />
+                    <TextView
+
+                        style="@style/DetailField"
+                        android:id="@+id/detailOdometer" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/DetailTitle"
+                    android:id="@+id/detailDate"
+                    android:textAlignment="viewEnd"
+                    android:paddingRight="16dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/DetailTitle"
-                    android:text="Odometer"
-                />
-                <TextView
-
-                    style="@style/DetailField"
-                    android:id="@+id/detailOdometer" />
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailGallonsContainer">
 
             <TextView
                 style="@style/DetailTitle"
-                android:id="@+id/detailDate"
-                android:textAlignment="viewEnd"
-                android:paddingRight="16dp"
-                android:layout_weight="1"/>
+                android:text="Gallons"
+                />
+            <TextView
+                style="@style/DetailField"
+                android:id="@+id/detailGallons"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailPriceContainer">
+
+            <TextView
+                style="@style/DetailTitle"
+                android:text="Price"
+                />
+            <TextView
+                style="@style/DetailField"
+                android:id="@+id/detailPrice"/>
 
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/detailGallonsContainer">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailServiceContainer">
+
+            <TextView
+                style="@style/DetailTitle"
+                android:text="Service Type"
+                />
+            <TextView
+                style="@style/DetailField"
+                android:id="@+id/detailServiceType"
+                />
+        </LinearLayout>
+
+
 
         <TextView
             style="@style/DetailTitle"
-            android:text="Gallons"
+            android:text="Note"
             />
         <TextView
             style="@style/DetailField"
-            android:id="@+id/detailGallons"/>
+            android:id="@+id/detailNote"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/detailPriceContainer">
-
-        <TextView
-            style="@style/DetailTitle"
-            android:text="Price"
-            />
-        <TextView
-            style="@style/DetailField"
-            android:id="@+id/detailPrice"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/detailServiceContainer">
-
-        <TextView
-            style="@style/DetailTitle"
-            android:text="Service Type"
-            />
-        <TextView
-            style="@style/DetailField"
-            android:id="@+id/detailServiceType"
-            />
-    </LinearLayout>
-
-
-
-    <TextView
-        style="@style/DetailTitle"
-        android:text="Note"
-        />
-    <TextView
-        style="@style/DetailField"
-        android:id="@+id/detailNote"/>
-
-</LinearLayout>
+</ScrollView>
