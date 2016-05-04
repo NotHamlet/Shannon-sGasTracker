@@ -19,12 +19,8 @@
     <string name="spinner_label_log_entry">Misc. Entry</string>
     <string name="note_input_label">Note</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gas_entry_detail_title">Gas Entry (Detail)</string>
     <string name="service_entry_detail_title">Service Entry (Detail)</string>
     <string name="log_entry_detail_title">Log Entry (Detail)</string>
-
-    <!--TODO: Figure out formatting for Odometer readings: ~Try TOTALMILES(DIFF) -->
 
 </resources>
