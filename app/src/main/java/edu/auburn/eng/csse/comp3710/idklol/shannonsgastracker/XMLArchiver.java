@@ -26,6 +26,7 @@ public class XMLArchiver implements VehicleLogArchiver {
     private static final String ATTR_GALLONS = "gallons";
     private static final String ATTR_PRICE = "price";
     private static final String ATTR_SERVICE_TYPE = "service_type";
+    private static final String ATTR_NOTE = "note";
 
 
     @Override
@@ -103,12 +104,14 @@ public class XMLArchiver implements VehicleLogArchiver {
             String odometerAttr = xpp.getAttributeValue("", ATTR_ODOMETER);
             if (odometerAttr != null) {
                 newEntry.setOdometer(Double.valueOf(odometerAttr));
-
             }
             String idAttr = xpp.getAttributeValue("", ATTR_ID);
             if (idAttr != null) {
                 newEntry.setID(idAttr);
-
+            }
+            String noteAttr = xpp.getAttributeValue("", ATTR_NOTE);
+            if (noteAttr != null) {
+                newEntry.setNote(noteAttr);
             }
 
             newlog.addEntry(newEntry);
@@ -145,6 +148,7 @@ public class XMLArchiver implements VehicleLogArchiver {
                     .attribute("", ATTR_ODOMETER, Double.toString(gasE.getOdometer()))
                     .attribute("", ATTR_GALLONS, Double.toString(gasE.getGallons()))
                     .attribute("", ATTR_PRICE, Double.toString(gasE.getPrice()))
+                    .attribute("", ATTR_NOTE, entry.getNote())
                     .endTag("", TAG_GAS_ENTRY);
         }
         else if (entry instanceof ServiceEntry) {
@@ -153,12 +157,14 @@ public class XMLArchiver implements VehicleLogArchiver {
                     .attribute("", ATTR_ID, serviceE.getID())
                     .attribute("", ATTR_ODOMETER, Double.toString(serviceE.getOdometer()))
                     .attribute("", ATTR_SERVICE_TYPE, serviceE.getServiceType())
+                    .attribute("", ATTR_NOTE, entry.getNote())
                     .endTag("", TAG_SERVICE_ENTRY);
         }
         else {
             ser.startTag("", TAG_ENTRY)
                     .attribute("", ATTR_ID, entry.getID())
                     .attribute("", ATTR_ODOMETER, Double.toString(entry.getOdometer()))
+                    .attribute("", ATTR_NOTE, entry.getNote())
                     .endTag("", TAG_ENTRY);
         }
     }
