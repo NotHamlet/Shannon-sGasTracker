@@ -1,6 +1,7 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 /**
@@ -8,8 +9,11 @@ import java.util.Random;
  */
 
 public class VehicleLog {
-    private ArrayList<LogEntry> mEntries;
+    private static final double TOLERANCE = .0001;
 
+
+    private ArrayList<LogEntry> mEntries;
+    private Comparator<LogEntry> mComp = new OdometerComparator();
 
     public VehicleLog() {
         mEntries = new ArrayList<>();
@@ -28,7 +32,19 @@ public class VehicleLog {
             throw new IllegalArgumentException();
         }
 
-        mEntries.add(entry);
+        for (int i = 0; i < mEntries.size(); i++) {
+            if (entry.getID().equals(mEntries.get(i).getID())) {
+                mEntries.remove(i);
+                i--;
+            }
+        }
+
+        int index = 0;
+        while (index < mEntries.size() && mComp.compare(entry, mEntries.get(index)) > 0) {
+            index++;
+        }
+        mEntries.add(index,entry);
+
     }
 
     // TODO: Remove this before release
@@ -54,4 +70,19 @@ public class VehicleLog {
     }
 
 
+    private class OdometerComparator implements Comparator<LogEntry>{
+
+        @Override
+        public int compare(LogEntry lhs, LogEntry rhs) {
+            double result = (rhs.getOdometer()-lhs.getOdometer());
+            if (Math.abs(result) < TOLERANCE) {
+                return 0;
+            }
+            if (result > 0) {
+                return 1;
+            }
+            return -1;
+        }
+
+    }
 }
