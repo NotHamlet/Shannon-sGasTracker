@@ -1,9 +1,7 @@
 package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -33,19 +31,15 @@ import edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker.dummy.DummyContent
  * create an instance of this fragment.
  */
 public class LogEntryCreationFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private static final int TYPE_GAS_ENTRY = 0;
     private static final int TYPE_SERVICE_ENTRY = 1;
+    private static final int TYPE_LOG_ENTRY = 2;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private VehicleLog mVehicleLog = DummyContent.VEHICLE_LOG;
 
     private LogEntryCreationFragmentListener mListener;
+
+    private int mCurrentSpinnerPos = 0;
 
     public LogEntryCreationFragment() {
         // Required empty public constructor
@@ -148,7 +142,7 @@ public class LogEntryCreationFragment extends Fragment {
                 mListener.displayListFragment();
                 break;
             case R.id.action_done:
-                createNewGasEntry();
+                createNewLogEntry();
                 mListener.displayListFragment();
                 break;
         }
@@ -156,28 +150,48 @@ public class LogEntryCreationFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void createNewGasEntry() {
+    private void createNewLogEntry() {
         View view = getView();
 
         if (view != null) {
             // TODO: Add error checking and either instantiate with default values or flag required inputs
-            String gallonString = ((EditText)(view.findViewById(R.id.input_gallons))).getText().toString();
-            double gallonsValue = Double.parseDouble(gallonString);
-            String priceString = ((EditText)(view.findViewById(R.id.input_price))).getText().toString();
-            double priceValue = Double.parseDouble(priceString);
+            LogEntry newEntry;
+            switch (mCurrentSpinnerPos) {
+                case TYPE_GAS_ENTRY:
+                    GasEntry gasEntry = new GasEntry();
+                    String gallonString = ((EditText) (view.findViewById(R.id.input_gallons))).getText().toString();
+                    double gallonsValue = Double.parseDouble(gallonString);
+                    gasEntry.setGallons(gallonsValue);
+
+                    String priceString = ((EditText) (view.findViewById(R.id.input_price))).getText().toString();
+                    double priceValue = Double.parseDouble(priceString);
+                    gasEntry.setPrice(priceValue);
+
+                    newEntry = gasEntry;
+                    break;
+                case TYPE_SERVICE_ENTRY:
+                    ServiceEntry serviceEntry= new ServiceEntry();
+                    String serviceTypeString = ((EditText) (view.findViewById(R.id.input_service_type))).getText().toString();
+                    serviceEntry.setServiceType(serviceTypeString);
+
+                    newEntry = serviceEntry;
+                    break;
+                default:
+                    newEntry = new LogEntry();
+            }
+
             String odometerString = ((EditText)(view.findViewById(R.id.input_odometer))).getText().toString();
             double odometerValue = Double.parseDouble(odometerString);
-
-            GasEntry newEntry = new GasEntry();
-            newEntry.setGallons(gallonsValue);
-            newEntry.setPrice(priceValue);
             newEntry.setOdometer(odometerValue);
+
+            String noteString = ((EditText)(view.findViewById(R.id.input_note))).getText().toString();
+            newEntry.setNote(noteString);
 
             mVehicleLog.addEntry(newEntry);
             try {
                 (new XMLArchiver()).saveEntries(mVehicleLog, getContext());
             } catch (IOException e) {
-                Log.e("XMLTest", "Error saving with new Log Entry");
+                Log.e("XMLTest", "Error new Log Entry");
                 e.printStackTrace();
             }
 
@@ -221,6 +235,8 @@ public class LogEntryCreationFragment extends Fragment {
 
                     break;
             }
+
+            mCurrentSpinnerPos = position;
         }
 
         @Override
