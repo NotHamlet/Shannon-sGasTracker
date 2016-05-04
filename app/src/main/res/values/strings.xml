@@ -13,6 +13,11 @@
     <string name="gallons_input_label">Gallons Purchased</string>
     <string name="price_input_label">Price/Gallon</string>
     <string name="log_entry_creation_title">New Log Entry</string>
+    <string name="servicetype_input_label">Service Type</string>
+    <string name="spinner_label_gas_entry">Gas Entry</string>
+    <string name="spinner_label_service_entry">Service Entry</string>
+    <string name="spinner_label_log_entry">Misc. Entry</string>
+    <string name="note_input_label">Note</string>
 
     <!--TODO: Figure out formatting for Odometer readings: ~Try TOTALMILES(DIFF) -->
 

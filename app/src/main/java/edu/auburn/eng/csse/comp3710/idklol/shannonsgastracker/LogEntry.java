@@ -12,6 +12,7 @@ public class LogEntry {
     private String ID = UUID.randomUUID().toString();
     private Date mDate = new Date();
     private double mOdometer;
+    private String mNote;
 
     public Date getDate() {
         return mDate;
@@ -43,5 +44,13 @@ public class LogEntry {
         Random r = new Random();
         result.setOdometer((10000+r.nextInt(990000))/10.0);
         return result;
+    }
+
+    public void setNote(String note) {
+        mNote = note;
+    }
+
+    public String getNote() {
+        return mNote;
     }
 }
