@@ -52,11 +52,15 @@ public class MainActivity extends AppCompatActivity implements ServiceEntryListF
         transaction.commit();
     }
 
-    @Override
     public void displayListFragment() {
         ServiceEntryListFragment newFragment = ServiceEntryListFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.current_fragment, newFragment);
         transaction.commit();
+    }
+
+    @Override
+    public void popBackStack() {
+        getSupportFragmentManager().popBackStack();
     }
 }

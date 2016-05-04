@@ -168,11 +168,11 @@ public class GasDetailFragment extends Fragment {
         switch (item.getItemId()) {
             //TODO figure out if this is the best way to implement up button function
             case android.R.id.home:
-                mListener.displayListFragment();
+                mListener.popBackStack();
                 break;
             case R.id.action_delete:
                 deleteCurrentEntry();
-                mListener.displayListFragment();
+                mListener.popBackStack();
                 break;
         }
 
@@ -208,6 +208,6 @@ public class GasDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void displayListFragment();
+        void popBackStack();
     }
 }
