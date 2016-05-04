@@ -2,6 +2,7 @@ package edu.auburn.eng.csse.comp3710.idklol.shannonsgastracker;
 
 import android.content.ContentProvider;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.io.IOException;
 
@@ -33,6 +37,8 @@ public class LogEntryCreationFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int TYPE_GAS_ENTRY = 0;
+    private static final int TYPE_SERVICE_ENTRY = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -73,6 +79,7 @@ public class LogEntryCreationFragment extends Fragment {
             log = new VehicleLog();
             e.printStackTrace();
         }
+
         mVehicleLog = log;
     }
 
@@ -85,6 +92,19 @@ public class LogEntryCreationFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_log_entry_creation, container, false);
+
+
+        // Stock spinner with values
+        Resources res = getResources();
+        String[] spinnerOptions = {res.getString(R.string.spinner_label_gas_entry),
+                res.getString(R.string.spinner_label_service_entry),
+                res.getString(R.string.spinner_label_log_entry)};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item, spinnerOptions);
+
+        Spinner typeSpinner = (Spinner)view.findViewById(R.id.entry_type_spinner);
+        typeSpinner.setAdapter(adapter);
+        typeSpinner.setOnItemSelectedListener(new EntryTypeSpinnerListener());
+
         return view;
     }
 
@@ -140,6 +160,7 @@ public class LogEntryCreationFragment extends Fragment {
         View view = getView();
 
         if (view != null) {
+            // TODO: Add error checking and either instantiate with default values or flag required inputs
             String gallonString = ((EditText)(view.findViewById(R.id.input_gallons))).getText().toString();
             double gallonsValue = Double.parseDouble(gallonString);
             String priceString = ((EditText)(view.findViewById(R.id.input_price))).getText().toString();
@@ -175,5 +196,37 @@ public class LogEntryCreationFragment extends Fragment {
      */
     public interface LogEntryCreationFragmentListener {
         void displayListFragment();
+    }
+
+
+    private class EntryTypeSpinnerListener implements AdapterView.OnItemSelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            switch (position){
+                case TYPE_GAS_ENTRY:
+                    getView().findViewById(R.id.input_gallons).setVisibility(View.VISIBLE);
+                    getView().findViewById(R.id.input_price).setVisibility(View.VISIBLE);
+                    getView().findViewById(R.id.input_service_type).setVisibility(View.GONE);
+                    break;
+                case TYPE_SERVICE_ENTRY:
+                    getView().findViewById(R.id.input_gallons).setVisibility(View.GONE);
+                    getView().findViewById(R.id.input_price).setVisibility(View.GONE);
+                    getView().findViewById(R.id.input_service_type).setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    getView().findViewById(R.id.input_gallons).setVisibility(View.GONE);
+                    getView().findViewById(R.id.input_price).setVisibility(View.GONE);
+                    getView().findViewById(R.id.input_service_type).setVisibility(View.GONE);
+
+                    break;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+
     }
 }
