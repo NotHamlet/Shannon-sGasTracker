@@ -17,9 +17,11 @@ public class SplashActivity extends AppCompatActivity {
 
             public void run() {
 
+                int splashScreenDuration = 1750;
+
                 try {
                     int lTimer1 = 0;
-                    while (lTimer1 < 1750) {
+                    while (lTimer1 < splashScreenDuration) {
                         sleep(100);
                         lTimer1 = lTimer1 + 100;
                     }
