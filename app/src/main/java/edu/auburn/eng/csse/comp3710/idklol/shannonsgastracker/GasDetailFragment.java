@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -157,9 +158,21 @@ public class GasDetailFragment extends Fragment {
             android.support.v7.app.ActionBar bar = ((AppCompatActivity)mListener).getSupportActionBar();
             if (bar != null) {
                 bar.setDisplayHomeAsUpEnabled(true);
-                bar.setTitle(R.string.log_entry_creation_title);
+                setAppBarTitleText(bar);
                 bar.setDisplayShowTitleEnabled(true);
             }
+        }
+    }
+
+    private void setAppBarTitleText(ActionBar bar) {
+        if (mEntry instanceof GasEntry) {
+            bar.setTitle(R.string.gas_entry_detail_title);
+        }
+        else if (mEntry instanceof  ServiceEntry) {
+            bar.setTitle(R.string.service_entry_detail_title);
+        }
+        else {
+            bar.setTitle(R.string.log_entry_detail_title);
         }
     }
 
