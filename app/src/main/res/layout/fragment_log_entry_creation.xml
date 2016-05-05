@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:hint="@string/note_input_label"
-                    android:inputType="text"/>
+                    android:inputType="textMultiLine"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>

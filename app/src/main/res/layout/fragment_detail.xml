@@ -91,14 +91,20 @@
         </LinearLayout>
 
 
-
-        <TextView
-            style="@style/DetailTitle"
-            android:text="Note"
-            />
-        <TextView
-            style="@style/DetailField"
-            android:id="@+id/detailNote"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailNoteContainer">
+            <TextView
+                style="@style/DetailTitle"
+                android:text="Note"
+                />
+            <TextView
+                style="@style/DetailField"
+                android:id="@+id/detailNote"/>
+        </LinearLayout>
+            
     </LinearLayout>
+
 </ScrollView>

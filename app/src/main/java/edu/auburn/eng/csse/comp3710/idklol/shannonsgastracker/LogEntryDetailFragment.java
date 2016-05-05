@@ -98,7 +98,11 @@ public class LogEntryDetailFragment extends Fragment {
 
         odometerTextView.setText(Double.toString(mEntry.getOdometer()));
         noteTextView.setText(mEntry.getNote());
+        if (mEntry.getNote() == null || mEntry.getNote().length()==0) {
+            view.findViewById(R.id.detailNoteContainer).setVisibility(View.GONE);
+        }
 
+        // Set visibility of type-dependent fields
         if (mEntry instanceof GasEntry) {
             GasEntry gasEntry = (GasEntry)mEntry;
             TextView gallonsTextView = (TextView) view.findViewById(R.id.detailGallons);
