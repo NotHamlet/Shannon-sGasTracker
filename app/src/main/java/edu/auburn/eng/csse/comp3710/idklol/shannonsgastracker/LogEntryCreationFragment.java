@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -32,6 +36,8 @@ public class LogEntryCreationFragment extends Fragment {
     private static final int TYPE_GAS_ENTRY = 0;
     private static final int TYPE_SERVICE_ENTRY = 1;
     private static final int TYPE_LOG_ENTRY = 2;
+
+    private static final DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     private VehicleLog mVehicleLog;
 
@@ -92,6 +98,11 @@ public class LogEntryCreationFragment extends Fragment {
         typeSpinner.setAdapter(adapter);
         typeSpinner.setOnItemSelectedListener(new EntryTypeSpinnerListener());
         mTypeSpinner = typeSpinner;
+
+
+        EditText dateEditText = ((EditText)view.findViewById(R.id.input_date));
+        dateEditText.setText(df.format(new Date()));
+        dateEditText.setEnabled(false);
 
         return view;
     }
@@ -198,6 +209,13 @@ public class LogEntryCreationFragment extends Fragment {
 
             String noteString = ((EditText)(view.findViewById(R.id.input_note))).getText().toString();
             newEntry.setNote(noteString);
+
+            String dateString = ((EditText)(view.findViewById(R.id.input_date))).getText().toString();
+            try {
+                newEntry.setDate(df.parse(dateString));
+            } catch (ParseException e) {
+                // Do nothing. newEntry will have the current date by default.
+            }
 
             mVehicleLog.addEntry(newEntry);
             try {

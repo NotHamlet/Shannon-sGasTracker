@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -101,6 +102,8 @@ public class LogEntryDetailFragment extends Fragment {
         if (mEntry.getNote() == null || mEntry.getNote().length()==0) {
             view.findViewById(R.id.detailNoteContainer).setVisibility(View.GONE);
         }
+        String dateText = (new SimpleDateFormat("MM/dd/yyyy")).format(mEntry.getDate());
+        ((TextView) view.findViewById(R.id.detailDate)).setText(dateText);
 
         // Set visibility of type-dependent fields
         if (mEntry instanceof GasEntry) {
