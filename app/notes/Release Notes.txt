@@ -1,0 +1,36 @@
+Stephen Atwood
+Aaron Fregeau
+Shannon Lavender
+George Tkalych
+
+
+Release Notes
+
+
+
+Features Planned
+-Ability to track multiple vehicles’ service records
+-New gas entry including the current mileage of the car, gallons bought, and the price per gallon.
+-New service entry to record oil changes, tire rotations, and other services. The entry will include the date, current mileage, and notes.
+-Estimation for the number of miles left in the current tank based on the car’s average mileage and most recent fill-up.
+-View a log of recent activity on the vehicle.
+-Date on all entries.
+
+
+Features Implemented
+-New gas entry including the current mileage of the car, gallons bought, and the price per gallon.
+-New service entry to record oil changes, tire rotations, and other services. The entry will include the date, current mileage, and notes.
+-New note entry to record miscellaneous details about the vehicle.
+-View a log of recent activity on the vehicle.
+-Delete entries.
+-The Date field is autofilled with the current date.
+-The name was also changed.
+
+
+Known Bugs
+-Log entry fields are not checked for type or content, no error message is displayed but the app doesn't crash.
+
+
+Special Instructions to Install or Run
+-None.
+

@@ -8,19 +8,27 @@ SGT --> User: splash screen displayed
 User <-- SGT: display Service Log
 
 
-group Create New Log Entry
-User -> SGT: entry type
+group Create New Gas Entry
 User -> SGT: odometer reading
-User -> SGT: other information
+User -> SGT: gallons purchased
+User -> SGT: price per gallon
+User -> SGT: notes
 SGT --> User: creation confirmation
 end
 
-group Update Log Entry
-User -> SGT: select log entry
-SGT --> User: current state
-User -> SGT: new information
-SGT --> User: update confirmation
+group Create New Service Entry
+User -> SGT: odometer reading
+User -> SGT: service type
+User -> SGT: notes
+SGT --> User: creation confirmation
 end
+
+group Create New Miscellaneous Entry
+User -> SGT: odometer reading
+User -> SGT: miscellaneous information
+SGT --> User: creation confirmation
+end
+
 
 group Delete Log Entry
 User -> SGT: select log entry

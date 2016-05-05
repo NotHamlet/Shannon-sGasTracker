@@ -1,31 +1,27 @@
 @startuml
-title DUHTCSRA
+title Shannon's Gas Tracker
+left to right direction
 
 actor "Dr. Umphress" as User
 rectangle {
 
     usecase (Record Gas Fillup) as RGF
     usecase (Record Maintenance) as RM
+    usecase (Record Miscellaneous) as RMI
 
     usecase (View Service Record) as VSR
-    usecase (Filter Service Record) as FSR
-    usecase (View Usage Statistics) as VUS
 
-    usecase (Manage Vehicles) as MV
-    usecase (Switch Current Vehicle) as SV
-    usecase (Add New Vehicle) as ANV
-    usecase (Edit Vehicle Info) as EVI
+  usecase (Delete Entry) as DE
+
 
     User - VSR
-    VSR -- FSR: <<includes>>
-    VSR -- VUS: <<includes>>
+
+    User - DE
 
     User - RGF
     User - RM
+    User - RMI
 
-    User - MV
-    MV -- SV: <<includes>>
-    MV -- ANV: <<includes>>
-    MV -- EVI: <<includes>>
+
 }
 @enduml
